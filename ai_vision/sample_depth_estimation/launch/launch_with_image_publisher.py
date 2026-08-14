@@ -10,6 +10,8 @@ from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node, ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 from launch.actions import LogInfo
+from launch.actions import TimerAction
+
 
 def generate_launch_description():
     package_name = 'sample_depth_estimation' 
@@ -53,6 +55,10 @@ def generate_launch_description():
         name='depth_estimation_node', 
         namespace=namespace, 
     )
+    delayed_depth_estimation_node = TimerAction(
+        period=3.0,
+        actions=[depth_estimation_node],
+    )
 
     # Node for qnn inference
     nn_inference_node = ComposableNode(
@@ -86,6 +92,6 @@ def generate_launch_description():
             model_path_arg,
             image_publish_node, 
             container,
-            depth_estimation_node
+            delayed_depth_estimation_node
         ]
     )

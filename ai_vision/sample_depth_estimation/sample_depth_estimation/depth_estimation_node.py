@@ -29,7 +29,7 @@ class DepthEstimationNode(Node):
         self.padding = tuple()
 
         self.get_logger().info("Use qnn inference node!")
-        self.image_listener_ = self.create_subscription(Image, self.get_namespace() +'/cam0_stream1', self.image_callback, 10)           
+        self.image_listener_ = self.create_subscription(Image, self.get_namespace() +'/image_raw', self.image_callback, 10)           
         self.camera_listener_ = self.create_subscription(Image, '/image_raw', self.image_callback, 10)           
 
         self.qnn_infer_subscriber = self.create_subscription(
